@@ -1,0 +1,56 @@
+=== NUMERICAL STATISTICS ===
+,count,mean,std,min,25%,50%,75%,max
+Motor_Temperature,50000.0,59.986,20.516,25.0,42.0,60.0,78.0,95.0
+Ambient_Temperature,50000.0,29.972,7.201,18.0,24.0,30.0,36.0,42.0
+Humidity,50000.0,57.391,19.053,25.0,41.0,57.0,74.0,90.0
+Motor_Current_A,50000.0,14.52,6.063,4.0,9.3,14.51,19.8,25.0
+Power_Consumption_kW,50000.0,9.756,4.775,1.5,5.61,9.78,13.9,18.0
+Running_Hours,50000.0,12476.185,7234.297,0.0,6200.75,12473.0,18773.0,25000.0
+Door_Open_Count,50000.0,75079.97,43295.101,0.0,37735.75,74950.0,112711.25,150000.0
+Load_Weight,50000.0,599.819,346.437,0.0,299.0,600.0,900.0,1200.0
+Cabin_Speed_mps,50000.0,1.504,0.576,0.5,1.01,1.51,2.0,2.5
+Last_Maintenance_Days,50000.0,181.988,105.723,0.0,91.0,182.0,274.0,365.0
+Sensor_Health_Score,50000.0,75.006,14.661,50.0,62.0,75.0,88.0,100.0
+
+
+=== MISSING VALUES ===
+Column,Missing,Missing%,DataType
+Elevator_ID,0,0.0,object
+Motor_Temperature,0,0.0,int64
+Ambient_Temperature,0,0.0,int64
+Humidity,0,0.0,int64
+Vibration_Level,0,0.0,object
+Motor_Current_A,0,0.0,float64
+Power_Consumption_kW,0,0.0,float64
+Running_Hours,0,0.0,int64
+Door_Open_Count,0,0.0,int64
+Load_Weight,0,0.0,int64
+Cabin_Speed_mps,0,0.0,float64
+Brake_Condition,0,0.0,object
+Bearing_Condition,0,0.0,object
+Last_Maintenance_Days,0,0.0,int64
+Sensor_Health_Score,0,0.0,int64
+Error_Code,0,0.0,object
+Status,0,0.0,object
+
+
+=== STATUS DISTRIBUTION ===
+Status,Count,Percentage
+Maintenance Required,35570,71.14
+Healthy,11110,22.22
+Failure Predicted,3320,6.64
+
+
+=== OUTLIER ANALYSIS ===
+Feature,Lower_Bound,Upper_Bound,N_Outliers,Outlier_%
+Motor_Temperature,-66.0,186.0,0,0.0
+Ambient_Temperature,-12.0,72.0,0,0.0
+Humidity,-58.0,173.0,0,0.0
+Motor_Current_A,-22.2,51.3,0,0.0
+Power_Consumption_kW,-19.26,38.77,0,0.0
+Running_Hours,-31516.0,56489.75,0,0.0
+Door_Open_Count,-187190.75,337637.75,0,0.0
+Load_Weight,-1504.0,2703.0,0,0.0
+Cabin_Speed_mps,-1.96,4.97,0,0.0
+Last_Maintenance_Days,-458.0,823.0,0,0.0
+Sensor_Health_Score,-16.0,166.0,0,0.0
