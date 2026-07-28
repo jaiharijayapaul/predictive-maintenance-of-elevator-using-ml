@@ -385,7 +385,4 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ---
 
-<div align="center">
-    <strong>Built with ❤️ | Final Year AI & ML Project 2024–25</strong><br>
-    <em>ElevatorAI Predictive Maintenance System v1.0.0</em>
-</div>
+
