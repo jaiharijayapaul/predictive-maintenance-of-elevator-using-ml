@@ -93,14 +93,14 @@ class FeatureEngineer:
     def _get_vibration_numeric(self, df: pd.DataFrame) -> pd.Series:
         """Return numeric vibration values (handles both raw strings and encoded ints)."""
         col = df["Vibration_Level"]
-        if col.dtype == object:
+        if not pd.api.types.is_numeric_dtype(col):
             return col.map(self.VIBRATION_MAP).fillna(1).astype(float)
         return col.astype(float)
 
     def _get_condition_numeric(self, df: pd.DataFrame, col_name: str) -> pd.Series:
         """Return numeric condition values (handles both raw strings and encoded ints)."""
         col = df[col_name]
-        if col.dtype == object:
+        if not pd.api.types.is_numeric_dtype(col):
             return col.map(self.CONDITION_MAP).fillna(0).astype(float)
         return col.astype(float)
 
