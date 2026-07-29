@@ -228,7 +228,7 @@ def color_status(val):
     }
     return colors.get(val, "")
 
-styled = display_df.style.applymap(color_status, subset=["Status"]) if "Status" in display_df.columns else display_df
+styled = display_df.style.map(color_status, subset=["Status"]) if "Status" in display_df.columns else display_df
 st.dataframe(styled, use_container_width=True, hide_index=True, height=400)
 
 # ─────────────────────────────────────────────

@@ -139,8 +139,16 @@ with tab1:
             outlier_csv = outlier_df.to_csv(index=False)
 
             combined = f"=== NUMERICAL STATISTICS ===\n{stats_csv}\n\n=== MISSING VALUES ===\n{missing_csv}\n\n=== STATUS DISTRIBUTION ===\n{status_csv}\n\n=== OUTLIER ANALYSIS ===\n{outlier_csv}"
+            
+            # Save to server
+            import os
+            save_dir = PROJECT_ROOT / "saved_reports"
+            os.makedirs(save_dir, exist_ok=True)
+            report_name = f"analytics_report_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+            with open(save_dir / report_name, "w", encoding="utf-8") as f:
+                f.write(combined)
 
-        st.success("✅ Analytics report generated!")
+        st.success(f"✅ Analytics report generated and saved to server ({report_name})!")
         st.download_button(
             label="⬇️ Download Analytics Report (CSV)",
             data=combined.encode("utf-8"),
@@ -206,14 +214,23 @@ with tab2:
             colors = {"Failure Predicted": "color: #D50000; font-weight:700;", "Maintenance Required": "color: #FF6D00; font-weight:700;", "Healthy": "color: #00C853; font-weight:700;"}
             return colors.get(val, "")
 
-        styled_sched = schedule_df.style.applymap(color_maint, subset=["Status"]) if "Status" in schedule_df.columns else schedule_df
+        styled_sched = schedule_df.style.map(color_maint, subset=["Status"]) if "Status" in schedule_df.columns else schedule_df
         st.dataframe(styled_sched, use_container_width=True, hide_index=True, height=450)
 
         csv_sched = schedule_df.to_csv(index=False).encode("utf-8")
+        
+        # Save to server
+        import os
+        save_dir = PROJECT_ROOT / "saved_reports"
+        os.makedirs(save_dir, exist_ok=True)
+        report_name = f"maintenance_schedule_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+        with open(save_dir / report_name, "wb") as f:
+            f.write(csv_sched)
+            
         st.download_button(
             label="⬇️ Download Maintenance Schedule (CSV)",
             data=csv_sched,
-            file_name=f"maintenance_schedule_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+            file_name=report_name,
             mime="text/csv",
             use_container_width=True,
         )
@@ -264,10 +281,19 @@ with tab3:
             st.dataframe(predicted.head(50), use_container_width=True, hide_index=True, height=400)
 
             batch_csv = predicted.to_csv(index=False).encode("utf-8")
+            
+            # Save to server
+            import os
+            save_dir = PROJECT_ROOT / "saved_reports"
+            os.makedirs(save_dir, exist_ok=True)
+            report_name = f"batch_predictions_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+            with open(save_dir / report_name, "wb") as f:
+                f.write(batch_csv)
+                
             st.download_button(
                 label="⬇️ Download Batch Predictions (CSV)",
                 data=batch_csv,
-                file_name=f"batch_predictions_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+                file_name=report_name,
                 mime="text/csv",
                 use_container_width=True,
             )
@@ -302,10 +328,19 @@ with tab4:
             st.dataframe(report_df, use_container_width=True, hide_index=True)
 
             csv_model = report_df.to_csv(index=False).encode("utf-8")
+            
+            # Save to server
+            import os
+            save_dir = PROJECT_ROOT / "saved_reports"
+            os.makedirs(save_dir, exist_ok=True)
+            report_name = f"model_performance_{datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+            with open(save_dir / report_name, "wb") as f:
+                f.write(csv_model)
+                
             st.download_button(
                 label="⬇️ Download Model Performance (CSV)",
                 data=csv_model,
-                file_name=f"model_performance_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
+                file_name=report_name,
                 mime="text/csv",
                 use_container_width=True,
             )

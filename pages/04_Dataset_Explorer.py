@@ -213,9 +213,9 @@ def highlight_motor_temp(val):
 
 styled_page = page_df.style
 if "Status" in page_df.columns:
-    styled_page = styled_page.applymap(highlight_status, subset=["Status"])
+    styled_page = styled_page.map(highlight_status, subset=["Status"])
 if "Motor_Temperature" in page_df.columns:
-    styled_page = styled_page.applymap(highlight_motor_temp, subset=["Motor_Temperature"])
+    styled_page = styled_page.map(highlight_motor_temp, subset=["Motor_Temperature"])
 
 st.dataframe(styled_page, use_container_width=True, hide_index=True, height=500)
 
