@@ -147,7 +147,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 chart1, chart2 = st.columns([1, 1])
 
 with chart1:
-    st.plotly_chart(Visualizations.status_donut(filtered_df), use_container_width=True)
+    st.plotly_chart(Visualizations.status_donut(filtered_df), width="stretch")
 
 with chart2:
     # Error code distribution
@@ -172,7 +172,7 @@ with chart2:
         height=400, margin=dict(t=50, b=30, l=200, r=40),
         coloraxis_showscale=False,
     )
-    st.plotly_chart(fig_error, use_container_width=True)
+    st.plotly_chart(fig_error, width="stretch")
 
 # ─────────────────────────────────────────────
 # Charts Row 2
@@ -181,7 +181,7 @@ with chart2:
 chart3, chart4 = st.columns([1, 1])
 
 with chart3:
-    st.plotly_chart(Visualizations.failure_trend_scatter(filtered_df), use_container_width=True)
+    st.plotly_chart(Visualizations.failure_trend_scatter(filtered_df), width="stretch")
 
 with chart4:
     # Brake + Bearing condition stacked bars
@@ -198,7 +198,7 @@ with chart4:
         height=430, legend=dict(orientation="h", yanchor="bottom", y=-0.3),
         margin=dict(t=50, b=80, l=60, r=20),
     )
-    st.plotly_chart(fig_cond, use_container_width=True)
+    st.plotly_chart(fig_cond, width="stretch")
 
 # ─────────────────────────────────────────────
 # Maintenance Due Table
@@ -229,7 +229,7 @@ def color_status(val):
     return colors.get(val, "")
 
 styled = display_df.style.map(color_status, subset=["Status"]) if "Status" in display_df.columns else display_df
-st.dataframe(styled, use_container_width=True, hide_index=True, height=400)
+st.dataframe(styled, width="stretch", hide_index=True, height=400)
 
 # ─────────────────────────────────────────────
 # Vibration Analysis
@@ -241,13 +241,13 @@ v1, v2 = st.columns([1, 1])
 with v1:
     st.plotly_chart(
         Visualizations.categorical_count_chart(filtered_df, "Vibration_Level"),
-        use_container_width=True,
+        width="stretch",
     )
 
 with v2:
     st.plotly_chart(
         Visualizations.maintenance_timeline(filtered_df),
-        use_container_width=True,
+        width="stretch",
     )
 
 # ─────────────────────────────────────────────
@@ -265,7 +265,7 @@ avg_by_status = filtered_df.groupby("Status").agg({
     "Load_Weight": "mean",
 }).round(2).reset_index()
 
-st.dataframe(avg_by_status, use_container_width=True, hide_index=True)
+st.dataframe(avg_by_status, width="stretch", hide_index=True)
 
 # ─────────────────────────────────────────────
 # Footer Stats

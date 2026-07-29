@@ -143,7 +143,7 @@ def highlight_best(row):
     return ["background-color: rgba(102,126,234,0.2); font-weight:bold;" if "⭐" in str(row["Model"]) else "" for _ in row]
 
 styled_comparison = comparison_df.style.apply(highlight_best, axis=1)
-st.dataframe(styled_comparison, use_container_width=True, hide_index=True)
+st.dataframe(styled_comparison, width="stretch", hide_index=True)
 
 # Download comparison CSV
 csv_bytes = comparison_df.to_csv(index=False).encode("utf-8")
@@ -162,7 +162,7 @@ with vc1:
         k: v for k, v in results.items()
         if k not in ("best_model", "feature_columns", "class_names")
     }
-    st.plotly_chart(Visualizations.model_comparison_radar(radar_results), use_container_width=True)
+    st.plotly_chart(Visualizations.model_comparison_radar(radar_results), width="stretch")
 
 with vc2:
     # Bar chart
@@ -192,7 +192,7 @@ with vc2:
         margin=dict(t=60, b=120, l=60, r=20),
         xaxis=dict(tickangle=-30),
     )
-    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar, width="stretch")
 
 # ─────────────────────────────────────────────
 # Per-Model Detailed Analysis
@@ -234,7 +234,7 @@ if selected_model and full_results and selected_model in full_results:
         if cm is not None:
             st.plotly_chart(
                 Visualizations.confusion_matrix_heatmap(cm, CLASS_NAMES, selected_model),
-                use_container_width=True,
+                width="stretch",
             )
 
     with report_col:
@@ -262,7 +262,7 @@ if selected_model and full_results and selected_model in full_results:
                     "F1-Score": f"{wa['f1-score']:.4f}",
                     "Support": f"{int(wa['support']):,}",
                 })
-            st.dataframe(pd.DataFrame(report_rows), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(report_rows), width="stretch", hide_index=True)
 
 # ─────────────────────────────────────────────
 # Feature Importance
@@ -275,7 +275,7 @@ if best_model is not None and hasattr(best_model, "feature_importances_") and fe
     importances = best_model.feature_importances_
     st.plotly_chart(
         Visualizations.feature_importance_bar(feature_columns, importances, top_n=25),
-        use_container_width=True,
+        width="stretch",
     )
 
     # Top 10 table
@@ -289,14 +289,14 @@ if best_model is not None and hasattr(best_model, "feature_importances_") and fe
     col_fi, _ = st.columns([1, 1])
     with col_fi:
         st.markdown("#### 🏅 Top 10 Most Important Features")
-        st.dataframe(fi_df[["Rank", "Feature", "Importance"]], use_container_width=True, hide_index=True)
+        st.dataframe(fi_df[["Rank", "Feature", "Importance"]], width="stretch", hide_index=True)
 elif best_model is not None and hasattr(best_model, "coef_"):
     # Logistic Regression
     importances = np.abs(best_model.coef_).mean(axis=0)
     if len(importances) == len(feature_columns):
         st.plotly_chart(
             Visualizations.feature_importance_bar(feature_columns, importances, top_n=20),
-            use_container_width=True,
+            width="stretch",
         )
 else:
     st.info("ℹ️ Feature importance not available for the selected model type.")
@@ -326,4 +326,4 @@ if train_times:
         height=350, coloraxis_showscale=False,
         margin=dict(t=60, b=30, l=150, r=80),
     )
-    st.plotly_chart(fig_time, use_container_width=True)
+    st.plotly_chart(fig_time, width="stretch")

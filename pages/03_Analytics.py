@@ -81,24 +81,24 @@ with tab1:
     with c1:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Motor_Temperature", "Motor Temperature Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
     with c2:
         st.plotly_chart(
             Visualizations.box_plot_by_status(df, "Motor_Temperature"),
-            use_container_width=True,
+            width="stretch",
         )
 
     c3, c4 = st.columns(2)
     with c3:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Ambient_Temperature", "Ambient Temperature Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
     with c4:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Humidity", "Humidity Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
 
     # Thermal combined scatter
@@ -122,7 +122,7 @@ with tab1:
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=450,
         legend=dict(orientation="h", yanchor="bottom", y=-0.3),
     )
-    st.plotly_chart(fig_thermal, use_container_width=True)
+    st.plotly_chart(fig_thermal, width="stretch")
 
 # ── Tab 2: Mechanical ────────────────────────
 with tab2:
@@ -132,12 +132,12 @@ with tab2:
     with c1:
         st.plotly_chart(
             Visualizations.categorical_count_chart(df, "Vibration_Level"),
-            use_container_width=True,
+            width="stretch",
         )
     with c2:
         st.plotly_chart(
             Visualizations.box_plot_by_status(df, "Vibration_Level" if df["Vibration_Level"].dtype != object else "Motor_Current_A"),
-            use_container_width=True,
+            width="stretch",
             key="box_plot_vib_fallback"
         )
 
@@ -145,12 +145,12 @@ with tab2:
     with c3:
         st.plotly_chart(
             Visualizations.categorical_count_chart(df, "Brake_Condition"),
-            use_container_width=True,
+            width="stretch",
         )
     with c4:
         st.plotly_chart(
             Visualizations.categorical_count_chart(df, "Bearing_Condition"),
-            use_container_width=True,
+            width="stretch",
         )
 
     st.markdown("#### ⚙️ Motor Current Distribution")
@@ -158,12 +158,12 @@ with tab2:
     with c5:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Motor_Current_A", "Motor Current (A) Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
     with c6:
         st.plotly_chart(
             Visualizations.box_plot_by_status(df, "Motor_Current_A"),
-            use_container_width=True,
+            width="stretch",
             key="box_plot_motor_current"
         )
 
@@ -184,7 +184,7 @@ with tab2:
     fig_cross.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", height=500,
     )
-    st.plotly_chart(fig_cross, use_container_width=True)
+    st.plotly_chart(fig_cross, width="stretch")
 
 # ── Tab 3: Power & Operations ────────────────
 with tab3:
@@ -194,44 +194,44 @@ with tab3:
     with c1:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Power_Consumption_kW", "Power Consumption (kW) Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
     with c2:
         st.plotly_chart(
             Visualizations.box_plot_by_status(df, "Power_Consumption_kW"),
-            use_container_width=True,
+            width="stretch",
         )
 
     c3, c4 = st.columns(2)
     with c3:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Running_Hours", "Running Hours Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
     with c4:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Load_Weight", "Load Weight Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
 
     c5, c6 = st.columns(2)
     with c5:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Door_Open_Count", "Door Open Count Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
     with c6:
         st.plotly_chart(
             Visualizations.feature_histogram(df, "Cabin_Speed_mps", "Cabin Speed Distribution"),
-            use_container_width=True,
+            width="stretch",
         )
 
-    st.plotly_chart(Visualizations.failure_trend_scatter(df), use_container_width=True)
+    st.plotly_chart(Visualizations.failure_trend_scatter(df), width="stretch")
 
 # ── Tab 4: Correlation ───────────────────────
 with tab4:
     st.markdown("### 🔗 Feature Correlation Analysis")
-    st.plotly_chart(Visualizations.correlation_heatmap(df), use_container_width=True)
+    st.plotly_chart(Visualizations.correlation_heatmap(df), width="stretch")
 
     st.markdown("#### 📊 Top Feature Correlations with Motor Temperature")
     numerical_df = df.select_dtypes(include="number")
@@ -258,7 +258,7 @@ with tab4:
         height=400,
         margin=dict(t=60, b=40, l=200, r=100),
     )
-    st.plotly_chart(fig_corr_bar, use_container_width=True)
+    st.plotly_chart(fig_corr_bar, width="stretch")
 
     # Sensor Health vs Last Maintenance correlation
     st.markdown("#### 🔗 Sensor Health vs Last Maintenance Days")
@@ -276,7 +276,7 @@ with tab4:
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", height=420,
         legend=dict(orientation="h", yanchor="bottom", y=-0.3),
     )
-    st.plotly_chart(fig_sh, use_container_width=True)
+    st.plotly_chart(fig_sh, width="stretch")
 
 # ── Tab 5: Feature Engineering ───────────────
 with tab5:
@@ -300,18 +300,18 @@ with tab5:
         with c1:
             st.plotly_chart(
                 Visualizations.feature_histogram(df_fe, sel_feature, f"{sel_feature} Distribution"),
-                use_container_width=True,
+                width="stretch",
             )
         with c2:
             if "Status" in df_fe.columns:
                 st.plotly_chart(
                     Visualizations.box_plot_by_status(df_fe, sel_feature),
-                    use_container_width=True,
+                    width="stretch",
                 )
 
     st.markdown("#### 📊 All Engineered Features — Statistical Summary")
     eng_stats = df_fe[eng_features].describe().round(3)
-    st.dataframe(eng_stats.T, use_container_width=True)
+    st.dataframe(eng_stats.T, width="stretch")
 
     # Health Score distribution
     if "Health_Score" in df_fe.columns:
@@ -329,14 +329,14 @@ with tab5:
             height=450, showlegend=False,
             margin=dict(t=60, b=60, l=60, r=20),
         )
-        st.plotly_chart(fig_health, use_container_width=True)
+        st.plotly_chart(fig_health, width="stretch")
 
 # ── Tab 6: Multi-Dimensional ─────────────────
 with tab6:
     st.markdown("### 🌐 Multi-Dimensional Feature Analysis")
     st.info("💡 Parallel Coordinates Plot: Click & drag on axes to create interactive filters. Colored by elevator status.")
 
-    st.plotly_chart(Visualizations.parallel_coordinates(df), use_container_width=True)
+    st.plotly_chart(Visualizations.parallel_coordinates(df), width="stretch")
 
     st.markdown("#### 🗺️ 3D Scatter — Motor Temperature × Running Hours × Power Consumption")
     sample_3d = df.sample(min(3000, len(df)), random_state=42)
@@ -361,4 +361,4 @@ with tab6:
         height=600,
         legend=dict(orientation="h", yanchor="bottom", y=-0.15),
     )
-    st.plotly_chart(fig_3d, use_container_width=True)
+    st.plotly_chart(fig_3d, width="stretch")

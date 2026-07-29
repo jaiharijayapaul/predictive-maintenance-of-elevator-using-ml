@@ -156,7 +156,7 @@ features_info = [
 ]
 
 fi_df_display = __import__("pandas").DataFrame(features_info, columns=["Feature Name", "Formula", "Description"])
-st.dataframe(fi_df_display, use_container_width=True, hide_index=True, height=380)
+st.dataframe(fi_df_display, width="stretch", hide_index=True, height=380)
 
 # ── Architecture Diagram ─────────────────────
 st.markdown("""

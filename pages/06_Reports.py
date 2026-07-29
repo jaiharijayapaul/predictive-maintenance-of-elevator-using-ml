@@ -104,7 +104,7 @@ with tab1:
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Generate analytics CSV
-    if st.button("📊 Generate Analytics Report", use_container_width=True, type="primary"):
+    if st.button("📊 Generate Analytics Report", width="stretch", type="primary"):
         with st.spinner("Generating report..."):
             # Statistical summary
             numerical_stats = df.select_dtypes(include="number").describe().round(3)
@@ -154,17 +154,17 @@ with tab1:
             data=combined.encode("utf-8"),
             file_name=f"analytics_report_{datetime.now().strftime('%Y%m%d_%H%M')}.csv",
             mime="text/csv",
-            use_container_width=True,
+            width="stretch",
         )
 
         st.markdown("#### 📋 Preview: Statistical Summary")
-        st.dataframe(numerical_stats.T, use_container_width=True)
+        st.dataframe(numerical_stats.T, width="stretch")
 
         st.markdown("#### 🎯 Status Distribution")
-        st.dataframe(status_dist, use_container_width=True, hide_index=True)
+        st.dataframe(status_dist, width="stretch", hide_index=True)
 
         st.markdown("#### 🔍 Outlier Analysis")
-        st.dataframe(outlier_df, use_container_width=True, hide_index=True)
+        st.dataframe(outlier_df, width="stretch", hide_index=True)
 
 # ── Tab 2: Maintenance Schedule ──────────────
 with tab2:
@@ -178,7 +178,7 @@ with tab2:
         index=1,
     )
 
-    if st.button("🔧 Generate Maintenance Schedule", use_container_width=True, type="primary"):
+    if st.button("🔧 Generate Maintenance Schedule", width="stretch", type="primary"):
         with st.spinner("Building maintenance schedule..."):
             maint_df = df.copy()
 
@@ -215,7 +215,7 @@ with tab2:
             return colors.get(val, "")
 
         styled_sched = schedule_df.style.map(color_maint, subset=["Status"]) if "Status" in schedule_df.columns else schedule_df
-        st.dataframe(styled_sched, use_container_width=True, hide_index=True, height=450)
+        st.dataframe(styled_sched, width="stretch", hide_index=True, height=450)
 
         csv_sched = schedule_df.to_csv(index=False).encode("utf-8")
         
@@ -232,7 +232,7 @@ with tab2:
             data=csv_sched,
             file_name=report_name,
             mime="text/csv",
-            use_container_width=True,
+            width="stretch",
         )
 
 # ── Tab 3: Batch Prediction ──────────────────
@@ -250,7 +250,7 @@ with tab3:
             default=df["Status"].unique().tolist(),
         )
 
-        if st.button("🔮 Run Batch Predictions", use_container_width=True, type="primary"):
+        if st.button("🔮 Run Batch Predictions", width="stretch", type="primary"):
             with st.spinner(f"Running AI predictions on {n_sample} elevators..."):
                 sample = df[df["Status"].isin(sel_status_batch)].sample(
                     min(n_sample, len(df)), random_state=42
@@ -278,7 +278,7 @@ with tab3:
                         st.metric("Avg Risk %", f"{predicted['Risk_%'].mean():.1f}%")
 
             st.success("✅ Batch prediction complete!")
-            st.dataframe(predicted.head(50), use_container_width=True, hide_index=True, height=400)
+            st.dataframe(predicted.head(50), width="stretch", hide_index=True, height=400)
 
             batch_csv = predicted.to_csv(index=False).encode("utf-8")
             
@@ -295,7 +295,7 @@ with tab3:
                 data=batch_csv,
                 file_name=report_name,
                 mime="text/csv",
-                use_container_width=True,
+                width="stretch",
             )
 
 # ── Tab 4: Model Performance Report ──────────
@@ -306,7 +306,7 @@ with tab4:
         import joblib
         model_results = joblib.load("saved_models/model_results.pkl")
 
-        if st.button("🤖 Generate Model Report", use_container_width=True, type="primary"):
+        if st.button("🤖 Generate Model Report", width="stretch", type="primary"):
             rows = []
             for name, metrics in model_results.items():
                 if name in ("best_model", "feature_columns", "class_names"):
@@ -325,7 +325,7 @@ with tab4:
                 })
 
             report_df = pd.DataFrame(rows).sort_values("F1_Score", ascending=False)
-            st.dataframe(report_df, use_container_width=True, hide_index=True)
+            st.dataframe(report_df, width="stretch", hide_index=True)
 
             csv_model = report_df.to_csv(index=False).encode("utf-8")
             
@@ -342,7 +342,7 @@ with tab4:
                 data=csv_model,
                 file_name=report_name,
                 mime="text/csv",
-                use_container_width=True,
+                width="stretch",
             )
 
     except FileNotFoundError:

@@ -169,7 +169,7 @@ with dl_col:
         data=csv_data,
         file_name="elevator_filtered_data.csv",
         mime="text/csv",
-        use_container_width=True,
+        width="stretch",
     )
 
 # ─────────────────────────────────────────────
@@ -217,7 +217,7 @@ if "Status" in page_df.columns:
 if "Motor_Temperature" in page_df.columns:
     styled_page = styled_page.map(highlight_motor_temp, subset=["Motor_Temperature"])
 
-st.dataframe(styled_page, use_container_width=True, hide_index=True, height=500)
+st.dataframe(styled_page, width="stretch", hide_index=True, height=500)
 
 # Pagination info
 st.caption(
@@ -235,7 +235,7 @@ with st.expander("📊 Statistical Summary of Filtered Data", expanded=False):
     if not numerical_filtered.empty:
         st.dataframe(
             numerical_filtered.describe().round(3).T,
-            use_container_width=True,
+            width="stretch",
         )
 
 with st.expander("📋 Value Counts for Categorical Columns", expanded=False):
@@ -245,4 +245,4 @@ with st.expander("📋 Value Counts for Categorical Columns", expanded=False):
         vc = filtered[cat_sel].value_counts().reset_index()
         vc.columns = [cat_sel, "Count"]
         vc["Percentage"] = (vc["Count"] / len(filtered) * 100).round(2).astype(str) + "%"
-        st.dataframe(vc, use_container_width=True, hide_index=True)
+        st.dataframe(vc, width="stretch", hide_index=True)

@@ -11,6 +11,7 @@ Version: 1.0.0
 from __future__ import annotations
 
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
@@ -187,7 +188,7 @@ with st.form("prediction_form", clear_on_submit=False):
     st.markdown("<br>", unsafe_allow_html=True)
     submitted = st.form_submit_button(
         "🔮 Predict Elevator Health",
-        use_container_width=True,
+        width="stretch",
         type="primary",
     )
 
@@ -306,13 +307,13 @@ if submitted:
     with viz_col:
         st.plotly_chart(
             Visualizations.probability_bars(result["probabilities"]),
-            use_container_width=True,
+            width="stretch",
         )
 
     with gauge_col:
         st.plotly_chart(
             Visualizations.risk_gauge(result["risk_percentage"]),
-            use_container_width=True,
+            width="stretch",
         )
 
     # ── Sensor Alerts ──────────────────────────
@@ -391,14 +392,24 @@ if submitted:
     )
 
     if pdf_bytes:
+        # Save to server automatically upon generation
+        import os
+        save_dir = PROJECT_ROOT / "saved_reports"
+        os.makedirs(save_dir, exist_ok=True)
+        save_path = save_dir / f"prediction_report_{elevator_id}_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf"
+        with open(save_path, "wb") as f:
+            f.write(pdf_bytes)
+            
+        st.success(f"✅ Report generated and saved to server: `{save_path.name}`")
+
         dl1, dl2 = st.columns(2)
         with dl1:
             st.download_button(
                 label="📄 Download PDF Report",
                 data=pdf_bytes,
-                file_name=f"prediction_report_{elevator_id}.pdf",
+                file_name=save_path.name,
                 mime="application/pdf",
-                use_container_width=True,
+                width="stretch",
             )
         with dl2:
             import json
@@ -416,7 +427,7 @@ if submitted:
                 data=json_data,
                 file_name=f"prediction_{elevator_id}.json",
                 mime="application/json",
-                use_container_width=True,
+                width="stretch",
             )
 else:
     # Default state

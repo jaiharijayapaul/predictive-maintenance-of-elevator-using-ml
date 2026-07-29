@@ -67,7 +67,7 @@ with tab1:
         hum_crit = st.slider("Humidity Critical (%)", 75, 90, 85)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("💾 Save Threshold Settings", type="primary", use_container_width=True):
+    if st.button("💾 Save Threshold Settings", type="primary", width="stretch"):
         thresholds = {
             "motor_temp_warning": motor_warn,
             "motor_temp_critical": motor_crit,

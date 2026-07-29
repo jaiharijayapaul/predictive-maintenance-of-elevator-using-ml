@@ -453,7 +453,7 @@ with st.expander("📋 View All Dataset Features", expanded=False):
         ],
     }
     import pandas as pd
-    st.dataframe(pd.DataFrame(features_data), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(features_data), width="stretch", hide_index=True)
 
 # ─────────────────────────────────────────────
 # Future Scope

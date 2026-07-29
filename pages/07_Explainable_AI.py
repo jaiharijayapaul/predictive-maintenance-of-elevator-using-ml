@@ -145,7 +145,7 @@ with tab1:
                           key="shap_global_samples",
                           help="More samples = more accurate but slower")
 
-    if st.button("🧮 Compute Global SHAP Importance", type="primary", use_container_width=True):
+    if st.button("🧮 Compute Global SHAP Importance", type="primary", width="stretch"):
         with st.spinner("Computing SHAP values..."):
             shap_values, X_sample, feat_names = compute_shap_values(n_samples)
 
@@ -179,7 +179,7 @@ with tab1:
                                 fi_df["Mean |SHAP|"].values,
                                 top_n=20,
                             ),
-                            use_container_width=True,
+                            width="stretch",
                         )
                 except Exception as e:
                     st.warning(f"Could not compute SHAP for {class_name}: {e}")
@@ -198,7 +198,7 @@ with tab2:
         format_func=lambda x: ["Healthy", "Maintenance Required", "Failure Predicted"][x],
     )
 
-    if st.button("📉 Generate SHAP Summary Plot", type="primary", use_container_width=True):
+    if st.button("📉 Generate SHAP Summary Plot", type="primary", width="stretch"):
         with st.spinner("Generating SHAP summary plot..."):
             try:
                 import shap
@@ -233,7 +233,7 @@ with tab2:
                         color="white", fontsize=14, pad=15
                     )
                     plt.tight_layout()
-                    st.pyplot(fig, use_container_width=True)
+                    st.pyplot(fig, width="stretch")
                     plt.close()
                 else:
                     st.error("SHAP computation failed.")
@@ -249,7 +249,7 @@ with tab3:
     sample_idx = st.slider("Select sample index", 0, 499, 0)
     n_water = st.slider("Background sample size", 50, 200, 100, key="water_samples")
 
-    if st.button("💧 Generate Waterfall Plot", type="primary", use_container_width=True):
+    if st.button("💧 Generate Waterfall Plot", type="primary", width="stretch"):
         with st.spinner("Computing SHAP for sample..."):
             try:
                 import shap
@@ -300,7 +300,7 @@ with tab3:
                         plt.title(f"SHAP Waterfall — {class_name} (Sample #{idx})", color="white", fontsize=12)
                         plt.tight_layout()
                         st.markdown(f"#### 🎯 {class_name}")
-                        st.pyplot(fig, use_container_width=True)
+                        st.pyplot(fig, width="stretch")
                         plt.close()
                     except Exception as e:
                         st.warning(f"Waterfall for {class_name}: {e}")
@@ -329,7 +329,7 @@ with tab4:
         pe_sensor = st.number_input("Sensor Health Score", 50, 100, 62, key="pe_sensor")
         pe_error = st.selectbox("Error Code", ["E000","E101","E102","E201","E301","E401","E501","E601"], key="pe_error")
 
-    if st.button("🧠 Explain This Prediction", type="primary", use_container_width=True):
+    if st.button("🧠 Explain This Prediction", type="primary", width="stretch"):
         from utils.predictor import ElevatorPredictor
         predictor = ElevatorPredictor().load()
 
@@ -402,5 +402,5 @@ with tab4:
         # Probability breakdown
         st.plotly_chart(
             Visualizations.probability_bars(probs),
-            use_container_width=True,
+            width="stretch",
         )
