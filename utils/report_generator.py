@@ -51,6 +51,12 @@ class ReportGenerator:
         alerts: List[Any],
     ) -> bytes:
         """Generate a PDF prediction report for a single elevator."""
+        
+        def clean_text(text: Any) -> str:
+            if text is None:
+                return ""
+            return str(text).replace("—", "-").replace("–", "-").replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"').replace("•", "-").replace("…", "...")
+
         try:
             from fpdf import FPDF
 
@@ -77,7 +83,7 @@ class ReportGenerator:
             pdf.set_font("Helvetica", "B", 12)
             pdf.cell(190, 8, "Report Information", ln=True)
             pdf.set_font("Helvetica", "", 10)
-            pdf.cell(95, 6, f"Elevator ID: {elevator_id}", ln=False)
+            pdf.cell(95, 6, f"Elevator ID: {clean_text(elevator_id)}", ln=False)
             pdf.cell(95, 6, f"Report Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", ln=True)
             pdf.cell(95, 6, f"Report Type: Prediction Analysis", ln=False)
             pdf.cell(95, 6, f"Version: {self.REPORT_VERSION}", ln=True)
@@ -86,7 +92,7 @@ class ReportGenerator:
             # ── Prediction Summary ───────────────────
             pdf.set_fill_color(240, 240, 255)
             pdf.set_font("Helvetica", "B", 12)
-            pred = prediction_result.get("prediction", "Unknown")
+            pred = clean_text(prediction_result.get("prediction", "Unknown"))
 
             # Color code the prediction
             if pred == "Healthy":
@@ -138,8 +144,8 @@ class ReportGenerator:
             for i, (label, value, unit) in enumerate(sensor_items):
                 fill_color = (248, 248, 248) if i % 2 == 0 else (255, 255, 255)
                 pdf.set_fill_color(*fill_color)
-                pdf.cell(90, 5, f"  {label}:", fill=True)
-                pdf.cell(100, 5, f"  {value}{unit}", fill=True, ln=True)
+                pdf.cell(90, 5, f"  {clean_text(label)}:", fill=True)
+                pdf.cell(100, 5, f"  {clean_text(value)}{unit}", fill=True, ln=True)
 
             pdf.ln(5)
 
@@ -149,10 +155,10 @@ class ReportGenerator:
             pdf.set_font("Helvetica", "", 9)
 
             for i, rec in enumerate(recommendations[:8]):  # Max 8 recommendations in report
-                action = rec.action if hasattr(rec, "action") else str(rec)
-                priority = rec.priority if hasattr(rec, "priority") else "N/A"
+                action = clean_text(rec.action if hasattr(rec, "action") else str(rec))
+                priority = clean_text(rec.priority if hasattr(rec, "priority") else "N/A")
                 icon = rec.icon if hasattr(rec, "icon") else "•"
-                reason = rec.reason if hasattr(rec, "reason") else ""
+                reason = clean_text(rec.reason if hasattr(rec, "reason") else "")
 
                 if priority == "IMMEDIATE":
                     pdf.set_fill_color(255, 220, 220)
