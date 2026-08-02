@@ -347,3 +347,6 @@ with tab4:
 
     except FileNotFoundError:
         st.error("⚠️ Model results not found. Please train the model first.")
+
+
+

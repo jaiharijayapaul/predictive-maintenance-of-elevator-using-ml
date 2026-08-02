@@ -246,3 +246,6 @@ with st.expander("📋 Value Counts for Categorical Columns", expanded=False):
         vc.columns = [cat_sel, "Count"]
         vc["Percentage"] = (vc["Count"] / len(filtered) * 100).round(2).astype(str) + "%"
         st.dataframe(vc, width="stretch", hide_index=True)
+
+
+

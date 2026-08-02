@@ -404,3 +404,6 @@ with tab4:
             Visualizations.probability_bars(probs),
             width="stretch",
         )
+
+
+

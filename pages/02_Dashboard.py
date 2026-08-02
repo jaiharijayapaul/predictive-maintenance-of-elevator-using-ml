@@ -277,3 +277,6 @@ st.markdown(f"""
     Filters: {len(status_filter)} status | {len(brake_filter)} brake | {len(bearing_filter)} bearing | {len(error_filter)} error codes
 </div>
 """, unsafe_allow_html=True)
+
+
+

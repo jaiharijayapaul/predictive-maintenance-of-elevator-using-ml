@@ -327,3 +327,6 @@ if train_times:
         margin=dict(t=60, b=30, l=150, r=80),
     )
     st.plotly_chart(fig_time, width="stretch")
+
+
+
